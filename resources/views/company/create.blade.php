@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="col-md-9 pe-5">
 
-                                    <input type="text" name="name" class="form-control form-control-lg" />
+                                    <input type="text" required name="name" class="form-control form-control-lg" />
 
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                 <div class="col-md-9 pe-5">
 
                                     <input type="email" name="email" class="form-control form-control-lg"
-                                        placeholder="example@example.com" />
+                                        placeholder="example@example.com" required />
 
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                 <div class="col-md-9 pe-5">
 
                                     <input type="text" name="website" class="form-control form-control-lg"
-                                        placeholder="Website" />
+                                        placeholder="Website" value="" />
 
                                 </div>
                             </div>
@@ -78,7 +78,8 @@
                                 </div>
                                 <div class="col-md-9 pe-5">
 
-                                    <input class="form-control form-control-lg" id="logo" name="logo" type="file" />
+                                    <input class="form-control form-control-lg" id="logo" name="logo" type="file"
+                                        required />
                                     <div class="small text-muted mt-2">Upload company logo minsize(100X100)</div>
 
                                 </div>

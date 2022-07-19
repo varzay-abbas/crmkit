@@ -33,7 +33,7 @@
                                 <div class="col-md-9 pe-5">
 
                                     <input type="text" name="name" value="{{$company->name}}"
-                                        class="form-control form-control-lg" />
+                                        class="form-control form-control-lg" required />
 
                                 </div>
                             </div>
@@ -49,7 +49,8 @@
                                 <div class="col-md-9 pe-5">
 
                                     <input type="email" name="email" value="{{$company->email}}"
-                                        class="form-control form-control-lg" placeholder="example@example.com" />
+                                        class="form-control form-control-lg" placeholder="example@example.com"
+                                        required />
 
                                 </div>
                             </div>
@@ -80,7 +81,8 @@
                                 </div>
                                 <div class="col-md-9 pe-5">
 
-                                    <input class="form-control form-control-lg" id="logo" name="logo" type="file" />
+                                    <input class="form-control form-control-lg" id="logo" name="logo" type="file"
+                                        value="{{$company->logo}}" />
                                     <div class="small text-muted mt-2">Upload company logo minsize(100X100)</div>
 
                                 </div>

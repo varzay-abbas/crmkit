@@ -33,7 +33,7 @@
                                 <div class="col-md-9 pe-5">
 
                                     <input type="text" name="first_name" value="{{$employee->first_name}}"
-                                        class="form-control form-control-lg" />
+                                        class="form-control form-control-lg" required />
 
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                 <div class="col-md-9 pe-5">
 
                                     <input type="text" name="last_name" value="{{$employee->last_name}}"
-                                        class="form-control form-control-lg" />
+                                        class="form-control form-control-lg" required />
 
                                 </div>
                             </div>
@@ -63,7 +63,8 @@
                                 <div class="col-md-9 pe-5">
 
                                     <input type="email" name="email" value="{{$employee->email}}"
-                                        class="form-control form-control-lg" placeholder="example@example.com" />
+                                        class="form-control form-control-lg" placeholder="example@example.com"
+                                        required />
 
                                 </div>
                             </div>

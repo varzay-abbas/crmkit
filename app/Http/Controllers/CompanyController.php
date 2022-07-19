@@ -83,8 +83,9 @@ class CompanyController extends Controller
             ];
             $reveiverEmailAddress = "aus234@gmail.com"; //Might be admin
             @Mail::to($reveiverEmailAddress)->send(new SendEmail($details));
-            $reveiverEmailAddress = $request->email; //company be admin
-            @Mail::to($reveiverEmailAddress)->send(new SendEmail($details));
+           // $reveiverEmailAddress = $request->email; 
+            //company be admin but need to be authorized in mailgun as it is free plan
+            //@Mail::to($reveiverEmailAddress)->send(new SendEmail($details));
 
         } catch (Exception $exception) {
             return back()->with('error',"You are not able to access");
