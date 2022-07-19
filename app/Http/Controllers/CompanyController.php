@@ -81,8 +81,11 @@ class CompanyController extends Controller
                 'email' => $request->email,
                 'website' => $request->website
             ];
-            $reveiverEmailAddress = "aus234@gmail.com";
+            $reveiverEmailAddress = "aus234@gmail.com"; //Might be admin
             @Mail::to($reveiverEmailAddress)->send(new SendEmail($details));
+            $reveiverEmailAddress = $request->email; //company be admin
+            @Mail::to($reveiverEmailAddress)->send(new SendEmail($details));
+
         } catch (Exception $exception) {
             return back()->with('error',"You are not able to access");
         }
