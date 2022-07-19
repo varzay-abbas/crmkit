@@ -10,7 +10,7 @@ This is laravel 9 based starter kit for mini Crm with adminthemelte, datatable i
 -   npm install
 -   npm run dev
 -   copy content of .env.example into .env
--   Create a database and update database credentials in .env
+-   Create a database and update database credentials, mailgun info in .env
 -   php artisan key:generate
 -   php artisan optimize
 -   php artisan migrate:refresh --seed
