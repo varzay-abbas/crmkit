@@ -26,7 +26,7 @@ class StoreCompanyRequest extends FormRequest
         $rules = [
             'name' => 'required',
             'email' => 'required|email',
-            'logo' => 'required|mimes:jpg,png|max:2048'
+            'logo' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:min_width=100,min_height=100'
         ];
 
         return $rules;
