@@ -92,7 +92,8 @@ class CompanyController extends Controller
                 'email' => $request->email,
                 'website' => $request->website
             ];
-            $reveiverEmailAddress = "aus234@gmail.com"; //Might be admin
+            //can be set here for other emails
+            $reveiverEmailAddress = "abbas23481@gmail.com"; //Might be admin authorized in mailgun for freeplan
             @Mail::to($reveiverEmailAddress)->send(new SendEmail($details));
            // $reveiverEmailAddress = $request->email; 
             //company be admin but need to be authorized in mailgun as it is free plan

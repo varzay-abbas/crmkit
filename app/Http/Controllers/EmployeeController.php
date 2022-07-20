@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Repositories\EmployeeRepository;
+use App\Repositories\CompanyRepository;
 use DataTables;
 
 
@@ -16,10 +17,12 @@ class EmployeeController extends Controller
 {
     
     protected $repository;
+    protected $cmprepository;
 
-    public function __construct(EmployeeRepository $employeeRepository) 
+    public function __construct(EmployeeRepository $employeeRepository, CompanyRepository $companyRepository) 
     {
         $this->repository = $employeeRepository;
+        $this->companyRepository =  $companyRepository;
     }
     
     /**
@@ -31,7 +34,6 @@ class EmployeeController extends Controller
     {
   
         if ($request->ajax()) {
-            //$data = Employee::with('company')->select("employees.*");
             $data = $this->repository->getAllEmployees();
             return Datatables::of($data)
                     ->addIndexColumn()
@@ -62,7 +64,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        $companies = Company::all();
+        $companies =  $this->companyRepository->getAllCompanies(); 
         return view('employee.create', compact('companies', $companies));
     }
 
@@ -74,14 +76,15 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        try {        
-            $employee = new Employee;
-            $employee->first_name = $request->first_name;
-            $employee->last_name = $request->last_name;
-            $employee->phone = $request->phone;
-            $employee->email = $request->email;
-            $employee->company_id = $request->company_id;
-            $employee->save();
+        $employeeDetails = [
+            "first_name" => $request->first_name,
+            "last_name" => $request->last_name,
+            "email" => $request->email,
+            "phone" => $request->phone,
+            "company_id" => $request->company_id
+        ];
+        try {      
+            $this->repository->createEmployee($EmployeeDetails) ;
         } catch (Exception $exception) {
             return back()->with('error',"You are not able to access");
         }
@@ -107,7 +110,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        $companies = Company::all();
+        $companies = $this->companyRepository->getAllCompanies();
         return view('employee.edit', compact('employee', 'companies'));
     }
 
@@ -120,18 +123,19 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
-        $employeeObj = Employee::find($employee->id);
-        try {       
-            $employeeObj->first_name = $request->first_name;
-            $employeeObj->last_name = $request->last_name;
-            $employeeObj->email = $request->email;
-            $employeeObj->phone = $request->phone;
-            $employeeObj->company_id = $request->company_id; 
-            $employeeObj->save();
+        $employeeDetails = [
+            "first_name" => $request->first_name,
+            "last_name" => $request->last_name,
+            "email" => $request->email,
+            "phone" => $request->phone,
+            "company_id" => $request->company_id
+        ];
+        try {
+            $this->repository->updateEmployee($employee->id, $employeeDetails);
         } catch (Exception $exception) {
              return back()->with('error',"You are not able to access");
          }
-
+        
         return redirect("/employees")->with('success','Successfully Updated. '); 
     }
 
