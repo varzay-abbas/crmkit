@@ -22,8 +22,6 @@ class CompanyController extends Controller
     {
         $this->repository = $companyRepository;
     }
-
-    
     
     /**
      * Display a listing of the resource.
@@ -77,24 +75,20 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
-
         try {        
-            $company = new Company;
-            $company->name = $request->name;
-            $company->email = $request->email;
-            $company->website = $request->website;
             $fileName = time().'.'.$request->file('logo')->extension();  
             $request->file('logo')->storeAs('public', $fileName); 
-            $company->logo = $fileName;
-            $company->save();
-            $details = [
-                'name' => $request->name,
-                'email' => $request->email,
-                'website' => $request->website
+            $companyDetails = [
+                "name" => $request->name,
+                "email" => $request->email,
+                "website" => $request->website,
+                "logo" => $fileName
             ];
+            $this->repository->createCompany($companyDetails) ;
+
             //can be set here for other emails
-            $reveiverEmailAddress = "abbas23481@gmail.com"; //Might be admin authorized in mailgun for freeplan
-            @Mail::to($reveiverEmailAddress)->send(new SendEmail($details));
+            $reveiverEmailAddress = "abbas23481@gmail.com"; //Might be mailgun authorized in mailgun for freeplan
+            @Mail::to($reveiverEmailAddress)->send(new SendEmail($companyDetails));
            // $reveiverEmailAddress = $request->email; 
             //company be admin but need to be authorized in mailgun as it is free plan
             //@Mail::to($reveiverEmailAddress)->send(new SendEmail($details));
@@ -137,17 +131,21 @@ class CompanyController extends Controller
      */
     public function update(UpdateCompanyRequest $request, Company $company)
     {
-        $companyObj = Company::find($company->id);
+       
         try {       
             if($request->hasFile('logo')) {
                $fileName = time().'.'.$request->file('logo')->extension();  
                $request->file('logo')->storeAs('public', $fileName); 
-               $companyObj->logo = $fileName;
-            }         
-            $companyObj->name = $request->name;
-            $companyObj->email = $request->email;
-            $companyObj->website = $request->website; 
-            $companyObj->save();
+            } else  $fileName = $company->logo;      
+            
+            $companyDetails = [
+                "name" => $request->name,
+                "email" => $request->email,
+                "website" => $request->website,
+                "logo" => $fileName
+            ];
+            $this->repository->updateCompany($company->id, $companyDetails )  ;
+
         } catch (Exception $exception) {
              return back()->with('error',"You are not able to access");
          }
