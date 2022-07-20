@@ -8,11 +8,20 @@ use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use App\Repositories\EmployeeRepository;
 use DataTables;
 
 
 class EmployeeController extends Controller
 {
+    
+    protected $repository;
+
+    public function __construct(EmployeeRepository $employeeRepository) 
+    {
+        $this->repository = $employeeRepository;
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -22,18 +31,19 @@ class EmployeeController extends Controller
     {
   
         if ($request->ajax()) {
-            $data = Employee::with('company')->select("employees.*");
+            //$data = Employee::with('company')->select("employees.*");
+            $data = $this->repository->getAllEmployees();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
                         $btn = '<form method="post" action="/employees/'.$row->id.'">
                         <input type="hidden" name="_method" value="delete"> 
                         <input type="hidden" name="_token" value="'.csrf_token().'">
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        <button type="submit" class="fabutton"><i class="far fa-trash-alt"></i></button>
                     </form>';
                     $btn .= '<br><form method="get" action="/employees/'.$row->id.'/edit">
                     <input type="hidden" name="_token" value="'.csrf_token().'">
-                    <button type="submit" class="btn btn-danger btn-sm">Edit</button>
+                    <button type="submit" class="fabutton" ><i class="far fa-edit"></i></button>
                     </form>'; 
 
                             return $btn;
@@ -133,7 +143,7 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        $employee->delete();
-        return redirect("/employees");
+        $this->repository->deleteEmployee($employee->id);
+        return redirect("/employees")->with('success','Successfully deleted. ');
     }
 }

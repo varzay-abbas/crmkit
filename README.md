@@ -1,6 +1,7 @@
 ## About Project
 
 This is laravel 9 based starter kit for mini Crm with adminthemelte, datatable integrated multilanguage features
+Awesome feature is the implementation of Repository Patter with Laravel 9
 
 ## Install
 

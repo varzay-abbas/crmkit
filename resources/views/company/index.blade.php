@@ -28,8 +28,8 @@
                 <th>Email</th>
                 <th>Logo</th>
                 <th>Website</th>
-                <th width="100px">CLogo</th>
-                <th width="100px">Action</th>
+                <th>CLogo</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
