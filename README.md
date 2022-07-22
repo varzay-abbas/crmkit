@@ -5,7 +5,7 @@ Awesome feature is the implementation of Repository Pattern with Laravel 9
 
 ## Install
 
--   clone the project git clone git clone git@github.com:varzay-abbas/crmkit.git
+-   clone the project git clone git@github.com:varzay-abbas/crmkit.git
 -   cd crmkit
 -   composer install
 -   npm install
@@ -15,6 +15,7 @@ Awesome feature is the implementation of Repository Pattern with Laravel 9
 -   php artisan key:generate
 -   php artisan optimize
 -   php artisan migrate:refresh --seed
+-   php artisan storage:link
 -   php artisan serve
 -   Open http://localhost:8000
 -   login with default credentials (admin@admin/password)
